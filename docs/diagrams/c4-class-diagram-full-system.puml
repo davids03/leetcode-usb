@@ -1,0 +1,184 @@
+@startuml
+!theme plain
+title Diagrama de Clases – Sistema Completo (Backend + Frontend)
+
+' ==================== BACKEND ====================
+
+' ----- Modelos (SQLAlchemy) -----
+class User {
+  - id: Integer
+  - username: String
+  - email: String
+  - password_hash: String
+  - role: String
+  - created_at: DateTime
+  --
+  + set_password(password)
+  + check_password(password): Boolean
+  + to_dict(): Dict
+}
+
+class Problem {
+  - id: Integer
+  - title: String
+  - description: Text
+  - difficulty: Enum(easy,medium,hard)
+  - category: String
+  - created_at: DateTime
+  --
+  + test_cases: List<TestCase>
+}
+
+class TestCase {
+  - id: Integer
+  - problem_id: Integer (FK)
+  - input_data: Text
+  - expected_output: Text
+  - is_public: Boolean
+  - description: String
+}
+
+class Submission {
+  - id: Integer
+  - user_id: Integer (FK)
+  - problem_id: Integer (FK)
+  - language: String
+  - code: Text
+  - status: String
+  - submitted_at: DateTime
+  --
+  + results: List<SubmissionResult>
+}
+
+class SubmissionResult {
+  - id: Integer
+  - submission_id: Integer (FK)
+  - test_case_id: Integer (FK)
+  - status: String
+  - output: Text
+  - exec_time_ms: Integer
+}
+
+' ----- Controladores y Servicios (Backend) -----
+class AuthController {
+  + register(username, email, password): Response
+  + login(username, password): Response
+}
+
+class ProblemController {
+  + get_problems(difficulty): List<Problem>
+  + get_problem_detail(id): Problem
+}
+
+class SubmissionController {
+  + submit_code(problem_id, language, code): Submission
+}
+
+class Judge0Service {
+  + execute_code(source_code, language, stdin): Result
+}
+
+class JWTManager {
+  + create_access_token(identity): String
+  + verify_token(token): Boolean
+}
+
+' ==================== FRONTEND ====================
+
+' ----- Componentes React (Páginas) -----
+class LoginPage {
+  - username: String
+  - password: String
+  - error: String
+  --
+  + handleSubmit()
+}
+
+class ProblemListPage {
+  - problems: List<Problem>
+  - filter: String
+  --
+  + fetchProblems()
+  + filterByDifficulty(difficulty)
+}
+
+class ProblemViewPage {
+  - problem: Problem
+  - code: String
+  - language: String
+  - result: Object
+  - executing: Boolean
+  --
+  + fetchProblemDetail()
+  + handleRunCode()
+  + handleLanguageChange(lang)
+}
+
+' ----- Componentes Reutilizables -----
+class MonacoEditor {
+  + language: String
+  + value: String
+  + onChange(code)
+}
+
+' ----- Servicios Frontend -----
+class ApiService {
+  - axios instance
+  + request(config): Promise
+  + get(url, config)
+  + post(url, data, config)
+}
+
+class AuthService {
+  + login(username, password): Promise
+  + register(username, email, password): Promise
+}
+
+class StorageService {
+  + getToken(): String
+  + setToken(token)
+  + getUser(): Object
+  + clear()
+}
+
+' ==================== RELACIONES ====================
+
+' Backend: relaciones entre modelos
+User "1" -- "0..*" Submission
+Problem "1" -- "0..*" TestCase
+Problem "1" -- "0..*" Submission
+Submission "1" -- "0..*" SubmissionResult
+
+' Backend: controladores usan servicios y modelos
+AuthController ..> JWTManager : usa
+AuthController ..> User : gestiona
+ProblemController ..> Problem : consulta
+ProblemController ..> TestCase : filtra públicos
+SubmissionController ..> Judge0Service : ejecuta código
+SubmissionController ..> Submission : crea
+SubmissionController ..> SubmissionResult : registra
+
+' Frontend: páginas usan servicios y componentes
+LoginPage ..> AuthService : llama
+LoginPage ..> StorageService : guarda token
+LoginPage ..> "React Router" : redirige
+
+ProblemListPage ..> ApiService : GET /problems
+ProblemListPage ..> "React Router" : enlaza detalle
+
+ProblemViewPage ..> ApiService : GET /problems/:id, POST /submissions
+ProblemViewPage *-- MonacoEditor : contiene
+
+ApiService ..> StorageService : obtiene token
+AuthService ..> ApiService : usa
+
+' Comunicación entre frontend y backend (HTTP)
+ApiService ..> AuthController : POST /api/auth/login
+ApiService ..> ProblemController : GET /api/problems
+ApiService ..> SubmissionController : POST /api/submissions
+
+' Judge0Service se conectará externamente
+Judge0Service ..> "Judge0 API (futuro)" : HTTP
+
+' Nota: las flechas punteadas indican dependencia o uso
+@enduml

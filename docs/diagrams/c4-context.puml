@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Diagrama de Contexto – Plataforma de Práctica de Programación USB
+
+' Personas (actores)
+Person(estudiante, "Estudiante", "Usuario de primer año que resuelve problemas de programación")
+Person(profesor, "Profesor", "Gestiona problemas y revisa progreso de estudiantes (futuro)")
+
+' Sistema principal
+System(plataforma, "Plataforma USB LeetCode", "Permite autenticarse, listar problemas, ejecutar código (simulado o real) y validar soluciones")
+
+' Sistemas externos (actuales o planeados)
+System_Ext(judge0, "Judge0 / Piston API", "Ejecuta código de forma segura en contenedores (futuro reemplazo por servicio real)")
+System_Ext(email, "Servicio de correo", "Notificaciones de resultados y recordatorios (futuro)")
+
+' Relaciones
+Rel(estudiante, plataforma, "Usa", "HTTPS")
+Rel(profesor, plataforma, "Usa", "HTTPS (futuro)")
+Rel(plataforma, judge0, "Envía código y recibe resultado", "HTTP/REST")
+Rel(plataforma, email, "Envía notificaciones", "SMTP/API (futuro)")
+
+Boundary(sistema, "Límite del sistema") {
+    ' No se incluye la BD aquí porque es un contenedor, no un sistema externo.
+    ' La BD se mostrará en el diagrama de contenedores.
+}
+
+@enduml

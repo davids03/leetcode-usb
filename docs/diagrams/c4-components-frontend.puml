@@ -1,0 +1,41 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Diagrama de Componentes – Frontend React (SPA)
+
+' Contenedor padre (SPA React)
+Container(spa, "SPA React", "React + Vite", "Interfaz de usuario para estudiantes")
+
+' Componentes principales de la interfaz
+Component(login, "Login Page", "React Component", "Formulario de autenticación")
+Component(problem_list, "ProblemList Page", "React Component", "Muestra lista de problemas con filtro")
+Component(problem_view, "ProblemView Page", "React Component", "Detalle del problema, ejemplos y editor de código")
+Component(editor, "Monaco Editor", "React Component (@monaco-editor/react)", "Editor de código con resaltado de sintaxis")
+
+' Componentes de servicio / lógica
+Component(api_service, "API Service", "Axios + Interceptor", "Gestiona peticiones HTTP al backend y adjunta token JWT")
+Component(auth_service, "Auth Service", "Helper", "Funciones register, login")
+
+' Estado y enrutamiento
+Component(router, "Router", "React Router DOM", "Maneja navegación entre páginas")
+Component(storage, "Local Storage", "Browser API", "Almacena token JWT y datos de usuario")
+
+' Relaciones entre componentes
+Rel(login, auth_service, "Usa", "llamada")
+Rel(auth_service, api_service, "Usa", "POST /auth/login")
+Rel(api_service, storage, "Guarda token", "localStorage.setItem")
+Rel(login, router, "Redirige a /problems", "navigate()")
+
+Rel(problem_list, api_service, "Usa", "GET /problems")
+Rel(problem_list, router, "Navega a detalle", "Link a /problems/:id")
+
+Rel(problem_view, api_service, "Usa", "GET /problems/:id y POST /submissions")
+Rel(problem_view, editor, "Incluye", "componente hijo")
+Rel(problem_view, router, "Botón volver", "navigate(-1)")
+
+' Relación con sistemas externos
+System_Ext(backend, "Backend API", "Flask en localhost:5000")
+
+Rel(api_service, backend, "Consume", "HTTP/JSON (con token)")
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Diagrama de Componentes – API Flask (Contenedor Backend)
+
+' Contenedor padre (API Flask)
+Container(api, "API Flask", "Python + Flask", "Maneja autenticación, problemas y ejecución de código")
+
+' Componentes internos del contenedor
+Component(auth_ctrl, "Auth Controller", "Blueprint", "Gestiona registro y login de usuarios")
+Component(problem_ctrl, "Problem Controller", "Blueprint", "Lista problemas y muestra detalles")
+Component(submission_ctrl, "Submission Controller", "Blueprint", "Recibe código, ejecuta y guarda resultados")
+
+Component(jwt_manager, "JWT Manager", "Flask-JWT-Extended", "Valida tokens y protege endpoints")
+Component(bcrypt, "Bcrypt", "Flask-Bcrypt", "Hashea y verifica contraseñas")
+
+Component(judge0_svc, "Judge0 Service", "Mock / Real", "Ejecuta código (actualmente simulado, futuro con Judge0)")
+Component(db_access, "Database Access", "SQLAlchemy", "ORM para consultas a MySQL")
+
+Component(models, "Models", "SQLAlchemy Models", "Entidades: User, Problem, TestCase, Submission")
+
+' Relaciones entre componentes
+Rel(auth_ctrl, bcrypt, "Usa", "llamada")
+Rel(auth_ctrl, jwt_manager, "Usa", "genera token")
+Rel(auth_ctrl, db_access, "Lee/escribe usuarios", "SQLAlchemy")
+
+Rel(problem_ctrl, jwt_manager, "Usa", "valida token")
+Rel(problem_ctrl, db_access, "Consulta problemas y casos", "SQLAlchemy")
+
+Rel(submission_ctrl, jwt_manager, "Usa", "valida token")
+Rel(submission_ctrl, judge0_svc, "Envía código y recibe resultado", "llamada")
+Rel(submission_ctrl, db_access, "Guarda envíos y resultados", "SQLAlchemy")
+
+Rel(judge0_svc, db_access, "(Opcional) guarda logs", "futuro")
+
+' Relaciones con el exterior (se muestran como límites)
+Rel(api, auth_ctrl, "Expone", "/api/auth/*")
+Rel(api, problem_ctrl, "Expone", "/api/problems/*")
+Rel(api, submission_ctrl, "Expone", "/api/submissions/*")
+
+' Sistemas externos (ya mostrados en nivel 2, aquí para contexto)
+System_Ext(mysql, "MySQL", "Base de datos")
+System_Ext(judge0_ext, "Judge0 / Piston", "Ejecución real (futuro)")
+
+' Conexiones a sistemas externos
+Rel(db_access, mysql, "Persiste datos", "PyMySQL")
+Rel(judge0_svc, judge0_ext, "Llamará en futuro", "HTTP")
+
+' Nota: El servicio Judge0 actualmente es un mock interno, no llama a judge0_ext
+' Por eso se muestra con línea punteada.
+
+@enduml

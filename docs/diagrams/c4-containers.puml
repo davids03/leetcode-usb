@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Diagrama de Contenedores – Plataforma de Práctica de Programación USB
+
+' Persona
+Person(estudiante, "Estudiante", "Usuario de primer año")
+
+' Contenedores dentro del sistema
+System_Boundary(plataforma, "Plataforma USB LeetCode") {
+    Container(spa, "SPA React", "React + Vite", "Interfaz de usuario: lista de problemas, editor Monaco, autenticación")
+    Container(api, "API Flask", "Python + Flask", "Maneja autenticación, problemas, envíos y ejecución de código")
+    Container(db, "Base de Datos", "MySQL 8.0", "Almacena usuarios, problemas, casos de prueba, envíos y resultados")
+    Container(executor, "Servicio de Ejecución", "Mock / Judge0 (futuro)", "Ejecuta código (simulado actualmente, luego real)")
+}
+
+' Relaciones
+Rel(estudiante, spa, "Navega", "HTTPS")
+Rel(spa, api, "Consume API", "JSON/HTTP")
+Rel(api, db, "Lee/escribe datos", "SQLAlchemy (PyMySQL)")
+Rel(api, executor, "Envía código y recibe resultado", "HTTP/REST")
+
+' Mostrar dependencia externa (si se usa Judge0 real)
+Container_Ext(judge0, "Judge0 (futuro)", "Docker", "Sandbox para ejecución real de código")
+Rel(executor, judge0, "Sustituirá al mock", "Planeado")
+
+@enduml
