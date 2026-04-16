@@ -54,6 +54,9 @@ leetcode-usb/
 ├── .gitignore
 └── README.md
 
+<img width="360" height="608" alt="image" src="https://github.com/user-attachments/assets/7c5aaf0a-05c8-4f14-837b-0ec16754e895" />
+
+
 ## Requisitos previos
 
 - **Python 3.11** (recomendado) – [Descargar](https://www.python.org/downloads/release/python-3119/)
@@ -66,16 +69,18 @@ leetcode-usb/
 1. Clonar el repositorio
 
 2. Crear entorno virtual y activarlo
+   
 cd backend
 python -m venv venv
 venv\Scripts\activate        # Windows PowerShell
 
-3. Instalar dependencias
+4. Instalar dependencias
    
 pip install -r requirements.txt
 
 4. Configurar variables de entorno
 Crea el archivo backend/.env con el siguiente contenido (ajusta las credenciales de MySQL):
+
 FLASK_APP=src/app.py
 FLASK_ENV=development
 SECRET_KEY=clave_super_secreta_123
@@ -83,17 +88,20 @@ JWT_SECRET_KEY=otra_clave_para_jwt_456
 DATABASE_URL=mysql+pymysql://leetcode_user:Segura123@localhost/leetcode_usb
 JUDGE0_URL=http://localhost:2358   # (no necesario para simulación)
 
-5. Crear base de datos y usuario en MySQL
+6. Crear base de datos y usuario en MySQL
+   
 CREATE DATABASE leetcode_usb;
 CREATE USER 'leetcode_user'@'localhost' IDENTIFIED BY 'Segura123';
 GRANT ALL PRIVILEGES ON leetcode_usb.* TO 'leetcode_user'@'localhost';
 FLUSH PRIVILEGES;
 
-6. Ejecutar el backend
+8. Ejecutar el backend
+   
 python -m src.app
 
-7. (Opcional) Poblar la base de datos con problemas de ejemplo
+10. (Opcional) Poblar la base de datos con problemas de ejemplo
 Desde otra terminal (o deteniendo el servidor):
+
 cd ..
 python scripts/seed_db.py
 
