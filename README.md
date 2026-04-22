@@ -1,5 +1,7 @@
 # Plataforma de Práctica de Programación USB – LeetCode-like
 
+<!-- Este es un cambio de ejemplo para el Code Review -->
+
 Proyecto desarrollado para el curso **Laboratorio de Software III** (Universidad de San Buenaventura, Cali).  
 Inspirado en LeetCode, permite a los estudiantes autenticarse, ver problemas organizados por dificultad, escribir código en un editor Monaco y recibir retroalimentación (simulada por ahora).
 
