@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth';
-import './Login.css'; // Importamos el CSS externo
+import './Login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -29,21 +29,11 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>Usuario</label>
-            <input 
-              type="text" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)} 
-              required 
-            />
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
           <div className="input-group">
             <label>Contraseña</label>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-            />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           <button type="submit">Ingresar</button>
         </form>

@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',  // usa proxy de Vite
+  baseURL: 'http://localhost:5000/api',
 });
 
-// Interceptor para agregar token
+// Interceptor para agregar token (ya existente)
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('access_token');
   if (token) {
@@ -12,5 +12,20 @@ api.interceptors.request.use(config => {
   }
   return config;
 });
+
+// Interceptor para manejar 401 (token expirado o inválido)
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

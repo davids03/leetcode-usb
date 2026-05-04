@@ -1,41 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import './ProblemList.css';
 
 function ProblemList() {
-  console.log('ProblemList montado');
   const [problems, setProblems] = useState([]);
   const [difficulty, setDifficulty] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const fetchProblems = async (filter = '') => {
-    setLoading(true);
-    try {
-      const url = filter ? `/problems/?difficulty=${filter}` : '/problems/';
-      const response = await api.get(url);
-      setProblems(response.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchProblems(difficulty);
+    const fetchProblems = async () => {
+      setLoading(true);
+      try {
+        const url = difficulty ? `/problems/?difficulty=${difficulty}` : '/problems/';
+        const response = await api.get(url);
+        setProblems(response.data);
+        setError('');
+      } catch (err) {
+        console.error(err);
+        setError('No se pudieron cargar los problemas. Verifica tu conexión.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProblems();
   }, [difficulty]);
 
-  const getDifficultyColor = (diff) => {
-    if (diff === 'easy') return 'green';
-    if (diff === 'medium') return 'orange';
-    return 'red';
-  };
+  if (loading) return <div className="loading">Cargando problemas...</div>;
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Problemas Disponibles</h2>
-      <div>
-        <label>Filtrar por dificultad: </label>
+    <div className="problem-list-container">
+      <h2> Lista de Problemas</h2>
+      <div className="filter-bar">
+        <label>Filtrar por dificultad:</label>
         <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
           <option value="">Todas</option>
           <option value="easy">Fácil</option>
@@ -43,23 +42,40 @@ function ProblemList() {
           <option value="hard">Difícil</option>
         </select>
       </div>
-      {loading && <p>Cargando...</p>}
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 20 }}>
-        <thead>
-          <tr><th>ID</th><th>Título</th><th>Dificultad</th><th>Categoría</th><th>Acción</th></tr>
-        </thead>
-        <tbody>
-          {problems.map(p => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
-              <td>{p.title}</td>
-              <td style={{ color: getDifficultyColor(p.difficulty) }}>{p.difficulty}</td>
-              <td>{p.category}</td>
-              <td><Link to={`/problems/${p.id}`}>Ver</Link></td>
+      {problems.length === 0 ? (
+        <p>No hay problemas que mostrar.</p>
+      ) : (
+        <table className="problem-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Dificultad</th>
+              <th>Categoría</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {problems.map((problem) => (
+              <tr key={problem.id}>
+                <td>{problem.id}</td>
+                <td>
+                  <Link to={`/problems/${problem.id}`}>{problem.title}</Link>
+                </td>
+                <td>
+                  <span className={`difficulty-badge difficulty-${problem.difficulty}`}>
+                    {problem.difficulty === 'easy'
+                      ? 'Fácil'
+                      : problem.difficulty === 'medium'
+                      ? 'Medio'
+                      : 'Difícil'}
+                  </span>
+                </td>
+                <td>{problem.category}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

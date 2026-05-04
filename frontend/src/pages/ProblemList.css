@@ -1,0 +1,146 @@
+/* Contenedor principal */
+.problem-list-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Título */
+.problem-list-container h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+  border-left: 5px solid #3b82f6;
+  padding-left: 1rem;
+}
+
+/* Barra de filtro */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-bar label {
+  font-weight: 600;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.filter-bar select {
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-bar select:hover {
+  border-color: #3b82f6;
+}
+
+/* Tabla */
+.problem-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.problem-table thead tr {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: white;
+}
+
+.problem-table th {
+  padding: 1rem 1.2rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+.problem-table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background-color: #ffffff;
+  transition: background-color 0.2s;
+}
+
+.problem-table tbody tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Enlace al detalle */
+.problem-table a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.problem-table a:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+/* Badges de dificultad */
+.difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.difficulty-easy {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.difficulty-medium {
+  background-color: #fed7aa;
+  color: #9a3412;
+}
+
+.difficulty-hard {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Mensajes de estado */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1rem;
+  color: #64748b;
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #ef4444;
+  background-color: #fef2f2;
+  border-radius: 16px;
+  margin: 2rem auto;
+  max-width: 600px;
+}
