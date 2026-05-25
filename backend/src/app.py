@@ -3,7 +3,7 @@ import sys
 # Añadir la carpeta 'backend' al path para que 'src' sea reconocido
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from flask import Flask, jsonify
+from flask import Flask, app, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from src.extensions import db, bcrypt, jwt
@@ -39,10 +39,11 @@ def create_app():
     from src.routes.auth_routes import bp as auth_bp
     from src.routes.problem_routes import bp as problem_bp
     from src.routes.submission_routes import bp as submission_bp
+    from src.routes.admin_routes import bp as admin_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(problem_bp)
     app.register_blueprint(submission_bp)
-
+    app.register_blueprint(admin_bp)
 
     return app
 

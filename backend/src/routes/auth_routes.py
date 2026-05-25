@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
 from src.extensions import db
 from src.models.user import User
+from src.utils.logger import log_action
 
 bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
@@ -28,4 +29,14 @@ def login():
         return jsonify({"msg": "Credenciales inválidas"}), 401
     
     access_token = create_access_token(identity=str(user.id))
+    return jsonify({"access_token": access_token, "user": user.to_dict()}), 200
+    
+    # Registrar el evento de login
+    log_action(
+        user_id=user.id,
+        username=user.username,
+        action='login',
+        ip_address=request.remote_addr
+    )
+    
     return jsonify({"access_token": access_token, "user": user.to_dict()}), 200
