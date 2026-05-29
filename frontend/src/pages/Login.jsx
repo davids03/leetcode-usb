@@ -1,5 +1,6 @@
+// frontend/src/pages/Login.jsx
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../services/auth';
 import './Login.css';
 
@@ -9,7 +10,7 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Si ya hay token, redirigir inmediatamente a problemas
+  // Si ya hay token, redirigir directamente a problemas
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
@@ -38,14 +39,27 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>Usuario</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
           <div className="input-group">
             <label>Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           <button type="submit">Ingresar</button>
         </form>
+        <p className="register-link">
+          ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
+        </p>
       </div>
     </div>
   );

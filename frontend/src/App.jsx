@@ -5,6 +5,7 @@ import ProblemView from './pages/ProblemView';
 import AdminLogs from './pages/AdminLogs';
 import CreateProblem from './pages/CreateProblem';
 import Navbar from './components/Navbar';
+import Register from './pages/Register';
 
 function App() {
   const isAuthenticated = !!localStorage.getItem('access_token');
@@ -25,6 +26,7 @@ function App() {
         <Route path="/interview" element={isAuthenticated ? <div>Interview - Próximamente</div> : <Navigate to="/login" />} />
         <Route path="/store" element={isAuthenticated ? <div>Store - Próximamente</div> : <Navigate to="/login" />} />
         <Route path="/" element={<Navigate to="/problems" />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
