@@ -40,10 +40,12 @@ def create_app():
     from src.routes.problem_routes import bp as problem_bp
     from src.routes.submission_routes import bp as submission_bp
     from src.routes.admin_routes import bp as admin_bp
+    from src.routes.admin_problems_routes import bp as admin_problems_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(problem_bp)
     app.register_blueprint(submission_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(admin_problems_bp)
 
     return app
 

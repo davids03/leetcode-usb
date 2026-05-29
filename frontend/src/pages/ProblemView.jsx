@@ -8,24 +8,18 @@ const starterCodeByLanguage = {
   python: `# Escribe tu solución aquí
 import sys
 
-# Ejemplo para suma de dos números:
-# data = sys.stdin.read().strip().split()
-# if len(data) >= 2:
-#     a, b = map(int, data[:2])
-#     print(a + b)
+def solve():
+    # Lee la entrada y escribe la salida
+    pass
 
 if __name__ == "__main__":
-    # Lee toda la entrada
-    data = sys.stdin.read().strip().split()
-    if data:
-        # Aquí va la lógica del problema
-        pass
+    solve()
 `,
   javascript: `// Escribe tu solución aquí
 const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin });
 rl.on('line', (line) => {
-    // Lógica según el problema
+    // Procesa cada línea
     console.log(line);
 });
 `,
@@ -191,7 +185,7 @@ function ProblemView() {
                 <pre className="result-json">{JSON.stringify(result, null, 2)}</pre>
               )}
               <div className="result-summary">
-                <strong>Estado global:</strong> {result.status === 'accepted' ? ' Todas las pruebas pasaron' : result.status === 'wrong_answer' ? ' Algunas pruebas fallaron' : result.status === 'compile_error' ? '⚠️ Error de compilación' : result.status === 'runtime_error' ? '💥 Error en ejecución' : result.status}
+                <strong>Estado global:</strong> {result.status === 'accepted' ? ' Todas las pruebas pasaron' : result.status === 'wrong_answer' ? ' Algunas pruebas fallaron' : result.status === 'compile_error' ? ' Error de compilación' : result.status === 'runtime_error' ? ' Error en ejecución' : result.status}
               </div>
             </div>
           )}

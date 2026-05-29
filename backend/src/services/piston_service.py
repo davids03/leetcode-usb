@@ -2,17 +2,17 @@
 import requests
 import os
 
-# 1. Define la URL base según tu variable de entorno
+
 PISTON_API_URL = os.getenv('PISTON_API_URL', 'http://localhost:2000/api/v2')
 
 def execute_code(source_code, language, stdin=''):
     """
     Ejecuta código enviándolo a Piston API.
     """
-    # Mapea los nombres de lenguajes a como los entiende Piston.
+
     language_map = {
         'python': 'python',
-        'javascript': 'javascript', # Node.js
+        'javascript': 'javascript', 
         'java': 'java',
         'cpp': 'cpp',
     }

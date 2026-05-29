@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth';
 import './Login.css';
@@ -9,13 +9,22 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Si ya hay token, redirigir inmediatamente a problemas
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      window.location.href = '/problems';
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await login(username, password);
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      navigate('/problems');
+      // Forzar recarga completa para que el navbar y el estado se refresquen
+      window.location.href = '/problems';
     } catch (err) {
       setError(err.response?.data?.msg || 'Credenciales inválidas');
     }

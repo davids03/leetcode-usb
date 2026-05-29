@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from src.extensions import db
 from src.models import Submission, SubmissionResult, Problem, TestCase
 from src.services.judge0_service import execute_code
-from ..utils.logger import log_action   # importación relativa correcta
+from ..utils.logger import log_action 
 
 bp = Blueprint('submissions', __name__, url_prefix='/api/submissions')
 
@@ -87,7 +87,7 @@ def submit_code():
         submission.status = final_status
     db.session.commit()
 
-    # Registrar el evento en el log (HU5)
+    # Registrar el evento en el log
     from src.models.user import User
     user = User.query.get(user_id)
     if user:

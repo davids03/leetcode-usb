@@ -1,0 +1,104 @@
+.create-problem-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.create-problem-container h2 {
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #334155;
+}
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+}
+.test-case-card {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+.test-case-card h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+.checkbox input {
+  width: auto;
+  margin-right: 0.5rem;
+}
+.add-btn, .remove-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+.remove-btn {
+  background-color: #ef4444;
+}
+.add-btn:hover {
+  background-color: #2563eb;
+}
+.remove-btn:hover {
+  background-color: #dc2626;
+}
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+.form-actions button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.form-actions button:last-child {
+  background-color: #64748b;
+}
+.error-message {
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.success-message {
+  color: #059669;
+  background: #d1fae5;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
