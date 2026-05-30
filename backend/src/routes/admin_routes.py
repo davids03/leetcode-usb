@@ -39,3 +39,26 @@ def get_logs():
         'ip_address': l.ip_address,
         'created_at': l.created_at.isoformat()
     } for l in logs]), 200
+
+@bp.route('/users', methods=['GET', 'OPTIONS'])
+@jwt_required()
+def get_users():
+    if request.method == 'OPTIONS':
+        return '', 200
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user or user.role != 'admin':
+        return jsonify({"msg": "Acceso denegado"}), 403
+
+    role_filter = request.args.get('role')
+    query = User.query
+    if role_filter:
+        query = query.filter(User.role == role_filter)
+    users = query.order_by(User.created_at.desc()).all()
+    return jsonify([{
+        'id': u.id,
+        'username': u.username,
+        'email': u.email,
+        'role': u.role,
+        'created_at': u.created_at.isoformat()
+    } for u in users]), 200

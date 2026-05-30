@@ -27,15 +27,15 @@ def login():
     user = User.query.filter_by(username=data.get('username')).first()
     if not user or not user.check_password(data.get('password')):
         return jsonify({"msg": "Credenciales inválidas"}), 401
-    
+
     access_token = create_access_token(identity=str(user.id))
-    return jsonify({"access_token": access_token, "user": user.to_dict()}), 200
     
-    # Registrar el evento de login
+    # Registrar el evento de login en el log
     log_action(
         user_id=user.id,
         username=user.username,
         action='login',
+        details=f"Inicio de sesión exitoso",
         ip_address=request.remote_addr
     )
     

@@ -1,6 +1,5 @@
 import os
 import sys
-# Añadir la carpeta 'backend' al path para que 'src' sea reconocido
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from flask import Flask, app, jsonify

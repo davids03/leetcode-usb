@@ -1,0 +1,56 @@
+.admin-users-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-users-container h2 {
+  margin-bottom: 20px;
+}
+
+.filter-bar {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-bar select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.users-table th, .users-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.users-table th {
+  background-color: #f2f2f2;
+}
+
+.role-admin {
+  color: #2c3e50;
+  font-weight: bold;
+  background-color: #f1c40f;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.role-student {
+  color: #2c3e50;
+  background-color: #ecf0f1;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+}

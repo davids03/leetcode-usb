@@ -38,6 +38,7 @@ function Navbar() {
         {isAdmin && (
           <>
             <Link to="/admin/logs" className="nav-link admin-link"> Admin</Link>
+            <Link to="/admin/users" className="nav-link admin-link"> Usuarios</Link>
             <Link to="/admin/create-problem" className="nav-link admin-link"> Nuevo problema</Link>
           </>
         )}
